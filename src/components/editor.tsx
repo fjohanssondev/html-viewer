@@ -1,9 +1,10 @@
+import type React from 'react';
+import type { SetStateAction } from 'react';
 import { Textarea } from '@/components/ui/textarea'
 import { Clipboard } from '@/components/ui/clipboard';
 import { Field } from '@/components/ui/field';
 import { Label } from '@/components/ui/label';
-import type React from 'react';
-import type { SetStateAction } from 'react';
+import { Button } from '@/components/ui/button';
 
 interface EditorProps {
   input: string
@@ -15,7 +16,10 @@ function Editor({ input, setInput}: EditorProps){
     <Field>
       <Label htmlFor="input">Input</Label>
       <Textarea id="input" value={input} onChange={(e) => setInput(e.target.value)} />
-      <Clipboard text={input} />
+      <div className="flex justify-end items-center space-x-4">
+        <Clipboard text={input} />
+        <Button onClick={() => setInput("")}>Reset</Button>
+      </div>
     </Field>
   )
 }
