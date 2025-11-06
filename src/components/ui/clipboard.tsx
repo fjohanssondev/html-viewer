@@ -14,7 +14,7 @@ function Clipboard({ text }: { text: string }) {
   }
 
   return (
-    <Button className="relative w-32" variant="outline" onClick={handleClick}>
+    <Button className="relative w-28" variant="outline" onClick={handleClick}>
       <div 
         className="flex items-center justify-between px-4 w-full absolute will-change-transform transition-all duration-200"
         style={{
