@@ -21,6 +21,7 @@ function App() {
   const [input, setInput] = useState("")
   const [errors, setErrors] = useState<string[]>([])
   const [warnings, setWarnings] = useState<string[]>([])
+  const [isTyping, setIsTyping] = useState(false)
   const [value] = useDebounce(input, 1000)
 
   const validateHTML = async (html: string) => {
@@ -56,6 +57,12 @@ function App() {
   }
 
   useEffect(() => {
+    if (input === value){
+      setIsTyping(false)
+    }
+  }, [input, value])
+
+  useEffect(() => {
     const content = localStorage.getItem("content")
 
     if (content) {
@@ -71,6 +78,7 @@ function App() {
     const value = e.target.value
     setInput(value)
     validateHTML(value)
+    setIsTyping(true)
   }
 
   return (
@@ -89,7 +97,12 @@ function App() {
             <Warning errors={errors} warnings={warnings} />
           </div>
           <div className="flex w-full gap-8">
-            <Editor input={input} handleInputChange={handleInputChange} setInput={setInput} />
+            <Editor
+              input={input}
+              handleInputChange={handleInputChange}
+              setInput={setInput}
+              isTyping={isTyping}
+            />
             <Field>
               <Label>Output</Label>
               <Box dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(decode(input)) }} />
