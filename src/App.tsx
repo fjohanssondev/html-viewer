@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import DOMPurify from 'dompurify';
+import { useDebounce } from "use-debounce"
 import { ThemeProvider } from '@/components/theme-provider';
 import { Box } from '@/components/ui/box';
 import { ModeToggle } from './components/mode-toggle';
@@ -9,6 +10,19 @@ import { Editor } from '@/components/editor';
 
 function App() {
   const [input, setInput] = useState("")
+  const [value] = useDebounce(input, 1000)
+
+  useEffect(() => {
+    const content = localStorage.getItem("content")
+
+    if (content){
+      setInput(content)
+    }
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem("content", value)
+  }, [value])
 
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
