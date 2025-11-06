@@ -7,7 +7,9 @@
     "output": "Utmatning",
     "saved": "Sparad",
     "reset": "Återställ",
-    "typing": "Skriver..."
+    "typing": "Skriver...",
+    "copy": "Kopiera",
+    "copied": "Kopierad!"
   },
   "validation": {
     "errors": "Fel:",

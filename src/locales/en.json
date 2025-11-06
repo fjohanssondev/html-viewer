@@ -7,7 +7,9 @@
     "output": "Output",
     "saved": "Saved",
     "reset": "Reset",
-    "typing": "Typing..."
+    "typing": "Typing...",
+    "copy": "Copy",
+    "copied": "Copied!"
   },
   "validation": {
     "errors": "Errors:",
