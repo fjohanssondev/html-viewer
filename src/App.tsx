@@ -8,6 +8,7 @@ import { ModeToggle } from '@/components/mode-toggle';
 import { Editor } from '@/components/editor';
 import { Warning } from '@/components/warning';
 import { HtmlValidate } from 'html-validate';
+import { LanguageSwitch } from '@/components/language-switch';
 
 const validate = new HtmlValidate({
   extends: ['html-validate:recommended'],
@@ -89,7 +90,10 @@ function App() {
             <h1 className="text-lg font-medium">
               HTML/XML Viewer
             </h1>
-            <ModeToggle />
+            <div className="flex items-center space-x-4">
+              <LanguageSwitch />
+              <ModeToggle />
+            </div>
           </div>
         </header>
         <main className="flex flex-col items-center justify-center w-full">
