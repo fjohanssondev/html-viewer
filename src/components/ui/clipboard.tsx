@@ -8,7 +8,7 @@ function Clipboard({ text }: { text: string }) {
   const handleClick = () => {
     navigator.clipboard.writeText(text);
     setClicked(true);
-    setTimeout(() => setClicked(false), 3000);
+    setTimeout(() => setClicked(false), 2000);
   }
 
   return (
