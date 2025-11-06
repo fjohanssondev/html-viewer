@@ -16,7 +16,7 @@ function Editor({ input, setInput}: EditorProps){
     <Field>
       <Label htmlFor="input">Input</Label>
       <Textarea id="input" value={input} onChange={(e) => setInput(e.target.value)} />
-      <div className="flex justify-end items-center space-x-4">
+      <div className="flex justify-end items-center space-x-4 mt-4">
         <Clipboard text={input} />
         <Button onClick={() => setInput("")}>Reset</Button>
       </div>
