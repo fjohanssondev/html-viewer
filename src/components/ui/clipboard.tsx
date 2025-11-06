@@ -1,9 +1,11 @@
 import { Button } from "@/components/ui/button"
+import { useLanguage } from "@/hooks/useLanguage";
 import { Check, Copy } from "lucide-react"
 import { useState } from "react";
 
 function Clipboard({ text }: { text: string }) {
   const [clicked, setClicked] = useState(false);
+  const { t } = useLanguage()
 
   const handleClick = () => {
     navigator.clipboard.writeText(text);
@@ -12,9 +14,9 @@ function Clipboard({ text }: { text: string }) {
   }
 
   return (
-    <Button size="icon-sm" variant="outline" onClick={handleClick}>
+    <Button className="relative w-32" variant="outline" onClick={handleClick}>
       <div 
-        className="flex items-center justify-center absolute h-6 w-6 will-change-transform transition-all duration-200"
+        className="flex items-center justify-between px-4 w-full absolute will-change-transform transition-all duration-200"
         style={{
           opacity: clicked ? 0 : 1,
           filter: 'blur(0px)',
@@ -31,10 +33,11 @@ function Clipboard({ text }: { text: string }) {
           }
         }}
       >
+        <span>{t.editor.copy}</span>
         <Copy />
       </div>
       <div 
-        className="flex items-center justify-center absolute h-6 w-6 will-change-transform transition-all duration-200"
+        className="flex items-center justify-between px-4 w-full absolute will-change-transform transition-all duration-200"
         style={{
           opacity: clicked ? 1 : 0,
           filter: 'blur(0px)',
@@ -51,6 +54,7 @@ function Clipboard({ text }: { text: string }) {
           }
         }}
       >
+        <span>{t.editor.copied}</span>
         <Check />
       </div>
     </Button>

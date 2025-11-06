@@ -3,7 +3,7 @@ import DOMPurify from 'dompurify';
 import { useDebounce } from "use-debounce"
 import { decode } from 'he';
 import { ThemeProvider } from '@/components/theme-provider';
-import { Box, Field, Label } from '@/components/ui';
+import { Box, Field } from '@/components/ui';
 import { ModeToggle } from '@/components/mode-toggle';
 import { Editor } from '@/components/editor';
 import { Warning } from '@/components/warning';
@@ -87,9 +87,9 @@ function App() {
 
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <div className="container mx-auto px-4">
-        <header className="w-full">
-          <div className="flex items-center justify-between p-4">
+      <div className="flex flex-col container mx-auto px-4 min-h-screen">
+        <header className="w-full py-8">
+          <div className="flex items-center justify-between">
             <h1 className="text-lg font-medium">
               {t.app.title}
             </h1>
@@ -99,7 +99,7 @@ function App() {
             </div>
           </div>
         </header>
-        <main className="flex flex-col items-center justify-center w-full">
+        <main className="flex flex-col items-center justify-center w-full mt-64">
           <div className="mb-12">
             <Warning errors={errors} warnings={warnings} />
           </div>
@@ -111,7 +111,7 @@ function App() {
               isTyping={isTyping}
             />
             <Field>
-              <Label>{t.editor.output}</Label>
+              <p className="flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50">{t.editor.output}</p>
               <Box dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(decode(input)) }} />
             </Field>
           </div>
