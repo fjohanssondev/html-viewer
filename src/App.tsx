@@ -4,6 +4,9 @@ import { ThemeProvider } from '@/components/theme-provider';
 import { Textarea } from '@/components/ui/textarea'
 import { Box } from '@/components/ui/box';
 import { ModeToggle } from './components/mode-toggle';
+import { Label } from '@/components/ui/label';
+import { Field } from '@/components/ui/field';
+import { Clipboard } from '@/components/ui/clipboard';
 import './App.css'
 
 function App() {
@@ -11,18 +14,25 @@ function App() {
 
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <header>
+      <header className="w-full">
         <div className="flex items-center justify-between p-4">
-          <h1 className="text-3xl font-bold underline">
+          <h1 className="text-lg font-medium">
           HTML/XML Viewer
           </h1>
           <ModeToggle />
         </div>
       </header>
-      <main className="min-h-screen flex flex-col items-center justify-center">
-        <div className="flex h-48 w-full gap-8">
-        <Textarea value={input} onChange={(e) => setInput(e.target.value)} />
-        <Box dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(input) }} />
+      <main className="flex flex-col items-center justify-center w-full">
+        <div className="flex w-full gap-8">
+        <Field>
+          <Label htmlFor="input">Input</Label>
+          <Textarea id="input" value={input} onChange={(e) => setInput(e.target.value)} />
+          <Clipboard text={input} />
+        </Field>
+        <Field>
+          <Label htmlFor="output">Output</Label>
+          <Box id="output" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(input) }} />
+        </Field>
         </div>
       </main>
     </ThemeProvider>
