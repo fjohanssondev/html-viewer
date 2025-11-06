@@ -1,12 +1,11 @@
 import { useState } from 'react'
 import DOMPurify from 'dompurify';
 import { ThemeProvider } from '@/components/theme-provider';
-import { Textarea } from '@/components/ui/textarea'
 import { Box } from '@/components/ui/box';
 import { ModeToggle } from './components/mode-toggle';
 import { Label } from '@/components/ui/label';
 import { Field } from '@/components/ui/field';
-import { Clipboard } from '@/components/ui/clipboard';
+import { Editor } from '@/components/editor';
 
 function App() {
   const [input, setInput] = useState("")
@@ -24,11 +23,7 @@ function App() {
         </header>
         <main className="flex flex-col items-center justify-center w-full">
           <div className="flex w-full gap-8">
-          <Field>
-            <Label htmlFor="input">Input</Label>
-            <Textarea id="input" value={input} onChange={(e) => setInput(e.target.value)} />
-            <Clipboard text={input} />
-          </Field>
+          <Editor input={input} setInput={setInput} />
           <Field>
             <Label>Output</Label>
             <Box dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(input) }} />
