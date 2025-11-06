@@ -3,20 +3,62 @@ import DOMPurify from 'dompurify';
 import { useDebounce } from "use-debounce"
 import { decode } from 'he';
 import { ThemeProvider } from '@/components/theme-provider';
-import { Box } from '@/components/ui/box';
-import { ModeToggle } from './components/mode-toggle';
-import { Label } from '@/components/ui/label';
-import { Field } from '@/components/ui/field';
+import { Box, Field, Label } from '@/components/ui';
+import { ModeToggle } from '@/components/mode-toggle';
 import { Editor } from '@/components/editor';
+import { Warning } from '@/components/warning';
+import { HtmlValidate } from 'html-validate';
+
+const validate = new HtmlValidate({
+  extends: ['html-validate:recommended'],
+  rules: {
+    'void-style': 'off',
+    'no-trailing-whitespace': 'off',
+  }
+});
 
 function App() {
   const [input, setInput] = useState("")
+  const [errors, setErrors] = useState<string[]>([])
+  const [warnings, setWarnings] = useState<string[]>([])
   const [value] = useDebounce(input, 1000)
+
+  const validateHTML = async (html: string) => {
+    if (!html.trim()) {
+      setErrors([])
+      setWarnings([])
+      return
+    }
+
+    const decodedHTML = decode(html)
+    const report = await validate.validateString(decodedHTML)
+
+    if (!report.valid) {
+      const errorList: string[] = []
+      const warningList: string[] = []
+
+      report.results[0].messages.forEach(msg => {
+        const message = `Line ${msg.line}, Col ${msg.column}: ${msg.message}`
+
+        if (msg.severity === 2) {
+          errorList.push(message)
+        } else if (msg.severity === 1) {
+          warningList.push(message)
+        }
+      })
+
+      setErrors(errorList)
+      setWarnings(warningList)
+    } else {
+      setErrors([])
+      setWarnings([])
+    }
+  }
 
   useEffect(() => {
     const content = localStorage.getItem("content")
 
-    if (content){
+    if (content) {
       setInput(content)
     }
   }, [])
@@ -25,24 +67,33 @@ function App() {
     localStorage.setItem("content", value)
   }, [value])
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const value = e.target.value
+    setInput(value)
+    validateHTML(value)
+  }
+
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <div className="container mx-auto px-4">
         <header className="w-full">
-        <div className="flex items-center justify-between p-4">
-          <h1 className="text-lg font-medium">
-          HTML/XML Viewer
-          </h1>
-          <ModeToggle />
-        </div>
+          <div className="flex items-center justify-between p-4">
+            <h1 className="text-lg font-medium">
+              HTML/XML Viewer
+            </h1>
+            <ModeToggle />
+          </div>
         </header>
         <main className="flex flex-col items-center justify-center w-full">
+          <div className="mb-12">
+            <Warning errors={errors} warnings={warnings} />
+          </div>
           <div className="flex w-full gap-8">
-          <Editor input={input} setInput={setInput} />
-          <Field>
-            <Label>Output</Label>
-            <Box dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(decode(input)) }} />
-          </Field>
+            <Editor input={input} handleInputChange={handleInputChange} setInput={setInput} />
+            <Field>
+              <Label>Output</Label>
+              <Box dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(decode(input)) }} />
+            </Field>
           </div>
         </main>
       </div>
