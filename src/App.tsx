@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import DOMPurify from 'dompurify';
 import { useDebounce } from "use-debounce"
+import { decode } from 'he';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Box } from '@/components/ui/box';
 import { ModeToggle } from './components/mode-toggle';
@@ -40,7 +41,7 @@ function App() {
           <Editor input={input} setInput={setInput} />
           <Field>
             <Label>Output</Label>
-            <Box dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(input) }} />
+            <Box dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(decode(input)) }} />
           </Field>
           </div>
         </main>
