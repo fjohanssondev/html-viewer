@@ -5,6 +5,7 @@ import { Clipboard } from '@/components/ui/clipboard';
 import { Button, Label, Field } from '@/components/ui';
 import { Badge } from './ui/badge';
 import { Save } from 'lucide-react';
+import { useLanguage } from '@/hooks/useLanguage';
 
 interface EditorProps {
   input: string
@@ -14,15 +15,17 @@ interface EditorProps {
 }
 
 function Editor({ input, setInput, handleInputChange, isTyping }: EditorProps){
+  const { t } = useLanguage()
+
   return (
     <Field>
-      <Label htmlFor="input">Input</Label>
+      <Label htmlFor="input">{t.editor.input}</Label>
       <Textarea id="input" value={input} onChange={handleInputChange} />
       <div className="flex items-center">
-        <Badge variant="outline" className="mt-2">{isTyping ? "Typing..." : <><Save /> Saved</>}</Badge>
+        <Badge variant="outline" className="mt-2">{isTyping ? t.editor.typing : <><Save /> {t.editor.saved}</>}</Badge>
         <div className="flex ml-auto items-center space-x-4 mt-2">
           <Clipboard text={input} />
-          <Button onClick={() => setInput("")}>Reset</Button>
+          <Button onClick={() => setInput("")}>{t.editor.reset}</Button>
         </div>
       </div>
     </Field>

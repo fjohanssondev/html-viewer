@@ -1,4 +1,6 @@
 import React, { createContext, useEffect, useState } from "react"
+import en from "@/locales/en.json"
+import sv from "@/locales/sv.json"
 
 interface LanguageProviderProps {
   children: React.ReactNode
@@ -6,9 +8,18 @@ interface LanguageProviderProps {
 
 type Language = "en" | "sv"
 
+type Translations = typeof en
+
+// eslint-disable-next-line react-refresh/only-export-components
+export const translations: Record<Language, Translations> = {
+  en,
+  sv
+}
+
 type LanguageContextType = {
   selectedLanguage: Language
   setSelectedLanguage: React.Dispatch<React.SetStateAction<Language>>
+  t: Translations
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
@@ -26,7 +37,8 @@ function LanguageProvider({ children }: LanguageProviderProps) {
 
   const value = {
     selectedLanguage,
-    setSelectedLanguage
+    setSelectedLanguage,
+    t: translations[selectedLanguage]
   }
 
   return (

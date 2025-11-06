@@ -9,7 +9,7 @@ import { Editor } from '@/components/editor';
 import { Warning } from '@/components/warning';
 import { HtmlValidate } from 'html-validate';
 import { LanguageSwitch } from '@/components/language-switch';
-import { LanguageProvider } from './components/language-provider';
+import { useLanguage } from './hooks/useLanguage';
 
 const validate = new HtmlValidate({
   extends: ['html-validate:recommended'],
@@ -25,6 +25,8 @@ function App() {
   const [warnings, setWarnings] = useState<string[]>([])
   const [isTyping, setIsTyping] = useState(false)
   const [value] = useDebounce(input, 1000)
+
+  const { t } = useLanguage()
 
   const validateHTML = async (html: string) => {
     if (!html.trim()) {
@@ -85,38 +87,36 @@ function App() {
 
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <LanguageProvider>
-        <div className="container mx-auto px-4">
-          <header className="w-full">
-            <div className="flex items-center justify-between p-4">
-              <h1 className="text-lg font-medium">
-                HTML/XML Viewer
-              </h1>
-              <div className="flex items-center space-x-4">
-                <LanguageSwitch />
-                <ModeToggle />
-              </div>
+      <div className="container mx-auto px-4">
+        <header className="w-full">
+          <div className="flex items-center justify-between p-4">
+            <h1 className="text-lg font-medium">
+              {t.app.title}
+            </h1>
+            <div className="flex items-center space-x-4">
+              <LanguageSwitch />
+              <ModeToggle />
             </div>
-          </header>
-          <main className="flex flex-col items-center justify-center w-full">
-            <div className="mb-12">
-              <Warning errors={errors} warnings={warnings} />
-            </div>
-            <div className="flex w-full gap-8">
-              <Editor
-                input={input}
-                handleInputChange={handleInputChange}
-                setInput={setInput}
-                isTyping={isTyping}
-              />
-              <Field>
-                <Label>Output</Label>
-                <Box dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(decode(input)) }} />
-              </Field>
-            </div>
-          </main>
-        </div>
-      </LanguageProvider>
+          </div>
+        </header>
+        <main className="flex flex-col items-center justify-center w-full">
+          <div className="mb-12">
+            <Warning errors={errors} warnings={warnings} />
+          </div>
+          <div className="flex w-full gap-8">
+            <Editor
+              input={input}
+              handleInputChange={handleInputChange}
+              setInput={setInput}
+              isTyping={isTyping}
+            />
+            <Field>
+              <Label>{t.editor.output}</Label>
+              <Box dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(decode(input)) }} />
+            </Field>
+          </div>
+        </main>
+      </div>
     </ThemeProvider>
   )
 }
