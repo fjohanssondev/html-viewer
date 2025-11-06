@@ -30,8 +30,8 @@ function App() {
             <Clipboard text={input} />
           </Field>
           <Field>
-            <Label htmlFor="output">Output</Label>
-            <Box id="output" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(input) }} />
+            <Label>Output</Label>
+            <Box dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(input) }} />
           </Field>
           </div>
         </main>
