@@ -37,7 +37,7 @@ function Clipboard({ text }: { text: string }) {
         <Copy />
       </div>
       <div 
-        className="flex items-center justify-between px-4 w-full absolute will-change-transform transition-all duration-200"
+        className="flex items-center justify-center px-4 w-full absolute will-change-transform transition-all duration-200"
         style={{
           opacity: clicked ? 1 : 0,
           filter: 'blur(0px)',
@@ -54,7 +54,6 @@ function Clipboard({ text }: { text: string }) {
           }
         }}
       >
-        <span>{t.editor.copied}</span>
         <Check />
       </div>
     </Button>

@@ -8,8 +8,7 @@
     "saved": "Saved",
     "reset": "Reset",
     "typing": "Typing...",
-    "copy": "Copy",
-    "copied": "Copied!"
+    "copy": "Copy"
   },
   "validation": {
     "errors": "Errors:",
