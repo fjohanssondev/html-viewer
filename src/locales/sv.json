@@ -1,0 +1,21 @@
+{
+  "app": {
+    "title": "HTML/XML Visare"
+  },
+  "editor": {
+    "input": "Inmatning",
+    "output": "Utmatning",
+    "saved": "Sparad",
+    "reset": "Återställ",
+    "validating": "Validerar..."
+  },
+  "validation": {
+    "errors": "Fel:",
+    "warnings": "Varningar:",
+    "line": "Rad",
+    "col": "Kolumn"
+  },
+  "language": {
+    "name": "Svenska"
+  }
+}

@@ -1,29 +1,24 @@
-import { useState } from "react";
-import { Button } from "./ui";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, Button } from "@/components/ui";
+import { useLanguage } from "@/hooks/useLanguage";
 import { Globe } from "lucide-react";
 
 function LanguageSwitch() {
-  const [selectedLanguage, setSelectedLanguage] = useState("English")
-
-  const handleLanguageChange = (language: string) => {
-    setSelectedLanguage(language);
-  }
+  const { selectedLanguage, setSelectedLanguage } = useLanguage()
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="outline">
           <Globe />
-          {selectedLanguage}
+          {selectedLanguage === "en" ? "English" : "Svenska"}
           <span className="sr-only">Switch Language</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuItem onClick={() => handleLanguageChange("English")}>
+        <DropdownMenuItem onClick={() => setSelectedLanguage("en")}>
           English
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => handleLanguageChange("Svenska")}>
+        <DropdownMenuItem onClick={() => setSelectedLanguage("sv")}>
           Svenska
         </DropdownMenuItem>
       </DropdownMenuContent>

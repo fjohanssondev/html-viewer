@@ -1,0 +1,21 @@
+{
+  "app": {
+    "title": "HTML/XML Viewer"
+  },
+  "editor": {
+    "input": "Input",
+    "output": "Output",
+    "saved": "Saved",
+    "reset": "Reset",
+    "validating": "Validating..."
+  },
+  "validation": {
+    "errors": "Errors:",
+    "warnings": "Warnings:",
+    "line": "Line",
+    "col": "Col"
+  },
+  "language": {
+    "name": "English"
+  }
+}

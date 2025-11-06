@@ -5,3 +5,4 @@ export { Textarea } from '@/components/ui/textarea';
 export { Button } from '@/components/ui/button';
 export { Alert, AlertDescription } from '@/components/ui/alert';
 export { Clipboard } from '@/components/ui/clipboard';
+export { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
