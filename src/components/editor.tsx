@@ -6,21 +6,24 @@ import { Button, Label, Field } from '@/components/ui';
 import { Badge } from './ui/badge';
 import { Save } from 'lucide-react';
 import { useLanguage } from '@/hooks/useLanguage';
+import { cn } from '@/lib/utils';
 
 interface EditorProps {
   input: string
   setInput: React.Dispatch<SetStateAction<string>>
   handleInputChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void
   isTyping?: boolean
+  errors: string[]
+  warnings: string[]
 }
 
-function Editor({ input, setInput, handleInputChange, isTyping }: EditorProps){
+function Editor({ input, setInput, handleInputChange, isTyping, errors, warnings }: EditorProps){
   const { t } = useLanguage()
 
   return (
     <Field>
       <Label htmlFor="input">{t.editor.input}</Label>
-      <Textarea id="input" value={input} onChange={handleInputChange} />
+      <Textarea id="input" value={input} onChange={handleInputChange} className={cn(errors.length > 0 ? 'border-destructive' : '', warnings.length > 0 ? 'border-orange-400' : '')} />
       <div className="flex items-center">
         <Badge variant="outline" className="mt-2">{isTyping ? t.editor.typing : <><Save /> {t.editor.saved}</>}</Badge>
         <div className="flex ml-auto items-center space-x-4 mt-2">

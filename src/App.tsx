@@ -109,6 +109,8 @@ function App() {
               handleInputChange={handleInputChange}
               setInput={setInput}
               isTyping={isTyping}
+              errors={errors}
+              warnings={warnings}
             />
             <Field>
               <p className="flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50">{t.editor.output}</p>
